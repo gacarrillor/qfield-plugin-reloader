@@ -2,11 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import org.qfield
-import org.qgis
 import Theme
-
-import "qrc:/qml" as QFieldItems
 
 Item {
     property
@@ -16,12 +12,11 @@ Item {
 
     Component.onCompleted: {
         iface.addItemToPluginsToolbar(reloadButton);
-        iface.addItemToPluginsToolbar(selectionButton);
     }
 
     QfToolButton {
         id: reloadButton
-        iconSource: 'reload.svg'
+        iconSource: 'icon.svg'
         iconColor: Theme.mainColor
         bgcolor: Theme.darkGray
         round: true
@@ -30,8 +25,11 @@ Item {
             if (pluginName != "" && pluginUuid != "") {
                 confirmationDialog.open()
             } else {
-                mainWindow.displayToast(qsTr("First select a plugin to be reloaded!"))
+                mainWindow.displayToast(qsTr("Press and hold to configure the plugin."))
             }
+        }
+        onPressAndHold: {
+            pluginSelectionDialog.open()
         }
     }
 
@@ -64,18 +62,6 @@ Item {
         }
     }
 
-    QfToolButton {
-        id: selectionButton
-        iconSource: 'icon.svg'
-        iconColor: Theme.mainColor
-        bgcolor: Theme.darkGray
-        round: true
-
-        onClicked: {
-            pluginSelectionDialog.open()
-        }
-    }
-
     Dialog {
         id: pluginSelectionDialog
         parent: mainWindow.contentItem
@@ -94,7 +80,7 @@ Item {
             Label {
                 id: labelSelection
                 wrapMode: Text.WrapText
-                text: qsTr("Select the app plugin you would like to reload")
+                text: qsTr("Select the (app) plugin you would like to reload")
             }
 
             QfComboBox {
