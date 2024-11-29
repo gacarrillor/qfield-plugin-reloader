@@ -1,6 +1,6 @@
 # QField Plugin Reloader
 
-QField plugin that allows you to reload your favorite plugin with a click!
+QField plugin that allows you to reload your chosen (app) plugin in one click.
 
 Particularly handy when developing a QField plugin and needing to quickly reload (i.e., unload and load again) it to reflect latests changes in plugin files.
 
