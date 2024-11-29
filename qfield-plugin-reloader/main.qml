@@ -30,7 +30,7 @@ Item {
             if (pluginName != "" && pluginUuid != "") {
                 confirmationDialog.open()
             } else {
-                mainWindow.displayToast("First select a plugin to be reloaded!")
+                mainWindow.displayToast(qsTr("First select a plugin to be reloaded!"))
             }
         }
     }
@@ -83,18 +83,28 @@ Item {
         modal: true
         font: Theme.defaultFont
         standardButtons: Dialog.Ok | Dialog.Cancel
-        title: "Select the app plugin you would like to be reloaded"
+        title: qsTr("Plugin selection")
 
         x: (mainWindow.width - width) / 2
         y: (mainWindow.height - height) / 2
 
-        QfComboBox {
-            id: comboBoxPlugins
-            width: parent.width
+        ColumnLayout {
+            spacing: 10
 
-            textRole: "name"
-            valueRole: "uuid"
-            model: pluginManager.availableAppPlugins
+            Label {
+                id: labelSelection
+                wrapMode: Text.WrapText
+                text: qsTr("Select the app plugin you would like to reload")
+            }
+
+            QfComboBox {
+                id: comboBoxPlugins
+                Layout.fillWidth: true
+
+                textRole: "name"
+                valueRole: "uuid"
+                model: pluginManager.availableAppPlugins
+            }
         }
 
         onAccepted: {
