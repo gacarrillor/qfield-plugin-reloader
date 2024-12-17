@@ -48,7 +48,7 @@ Item {
         ColumnLayout {
             Label {
                 width: parent.width
-                wrapMode: Text.WrapText
+                wrapMode: Text.Wrap
                 text: qsTr("Are you sure you want to reload the plugin '%1'?").arg(pluginName)
             }
         }
@@ -79,7 +79,7 @@ Item {
 
             Label {
                 id: labelSelection
-                wrapMode: Text.WrapText
+                wrapMode: Text.Wrap
                 text: qsTr("Select the (app) plugin you would like to reload")
             }
 
