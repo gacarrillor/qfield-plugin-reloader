@@ -2,13 +2,19 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import QtCore
+
 import Theme
 
 Item {
     property
     var mainWindow: iface.mainWindow()
-    property string pluginUuid: ""
-    property string pluginName: ""
+
+    Settings {
+        id: settings
+        property string pluginUuid: ""
+        property string pluginName: ""
+    }
 
     Component.onCompleted: {
         iface.addItemToPluginsToolbar(reloadButton);
@@ -22,7 +28,7 @@ Item {
         round: true
 
         onClicked: {
-            if (pluginName != "" && pluginUuid != "") {
+            if (settings.pluginName != "" && settings.pluginUuid != "") {
                 confirmationDialog.open()
             } else {
                 mainWindow.displayToast(qsTr("Press and hold to configure the plugin."))
@@ -49,16 +55,16 @@ Item {
             Label {
                 width: parent.width
                 wrapMode: Text.WrapText
-                text: qsTr("Are you sure you want to reload the plugin '%1'?").arg(pluginName)
+                text: qsTr("Are you sure you want to reload the plugin '%1'?").arg(settings.pluginName)
             }
         }
 
         onAccepted: {
-            if (pluginManager.isAppPluginEnabled(pluginUuid)) {
-                pluginManager.disableAppPlugin(pluginUuid)
+            if (pluginManager.isAppPluginEnabled(settings.pluginUuid)) {
+                pluginManager.disableAppPlugin(settings.pluginUuid)
             }
-            pluginManager.enableAppPlugin(pluginUuid)
-            mainWindow.displayToast(qsTr("Reloading plugin '%1'...").arg(pluginName))
+            pluginManager.enableAppPlugin(settings.pluginUuid)
+            mainWindow.displayToast(qsTr("Reloading plugin '%1'...").arg(settings.pluginName))
         }
     }
 
@@ -90,13 +96,14 @@ Item {
                 textRole: "name"
                 valueRole: "uuid"
                 model: pluginManager.availableAppPlugins
+                currentText: settings.pluginName
             }
         }
 
         onAccepted: {
             mainWindow.displayToast(qsTr("Plugin '%1' selected to be reloaded!").arg(comboBoxPlugins.currentText));
-            pluginName = comboBoxPlugins.currentText
-            pluginUuid = comboBoxPlugins.currentValue
+            settings.pluginName = comboBoxPlugins.currentText
+            settings.pluginUuid = comboBoxPlugins.currentValue
         }
     }
 }
