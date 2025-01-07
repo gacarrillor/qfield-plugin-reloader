@@ -1,3 +1,7 @@
+[![Release](https://img.shields.io/github/v/release/gacarrillor/qfield-plugin-reloader.svg)](https://github.com/gacarrillor/qfield-plugin-reloader/releases)
+
+
+
 # QField Plugin Reloader
 
 QField plugin that allows you to reload your chosen (app) plugin **in one click**.
