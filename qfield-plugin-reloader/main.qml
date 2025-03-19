@@ -1,19 +1,23 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtCore
 
 import Theme
 
 Item {
-    property
-    var mainWindow: iface.mainWindow()
-    property string pluginUuid: ""
-    property string pluginName: ""
+    property var mainWindow: iface.mainWindow()
 
     Component.onCompleted: {
         iface.addItemToPluginsToolbar(reloadButton);
     }
 
+    Settings {
+        id: reloaderSettings
+        property string pluginUuid: ""
+        property string pluginName: ""
+    }
+    
     QfToolButton {
         id: reloadButton
         iconSource: 'icon.svg'
@@ -22,7 +26,7 @@ Item {
         round: true
 
         onClicked: {
-            if (pluginName != "" && pluginUuid != "") {
+            if (reloaderSettings.pluginName != "" && reloaderSettings.pluginUuid != "") {
                 confirmationDialog.open()
             } else {
                 mainWindow.displayToast(qsTr("Press and hold to configure the plugin."))
@@ -49,16 +53,16 @@ Item {
             Label {
                 width: parent.width
                 wrapMode: Text.Wrap
-                text: qsTr("Are you sure you want to reload the plugin '%1'?").arg(pluginName)
+                text: qsTr("Are you sure you want to reload the plugin '%1'?").arg(reloaderSettings.pluginName)
             }
         }
 
         onAccepted: {
-            if (pluginManager.isAppPluginEnabled(pluginUuid)) {
-                pluginManager.disableAppPlugin(pluginUuid)
+            if (pluginManager.isAppPluginEnabled(reloaderSettings.pluginUuid)) {
+                pluginManager.disableAppPlugin(reloaderSettings.pluginUuid)
             }
-            pluginManager.enableAppPlugin(pluginUuid)
-            mainWindow.displayToast(qsTr("Reloading plugin '%1'...").arg(pluginName))
+            pluginManager.enableAppPlugin(reloaderSettings.pluginUuid)
+            mainWindow.displayToast(qsTr("Reloading plugin '%1'...").arg(reloaderSettings.pluginName))
         }
     }
 
@@ -73,6 +77,10 @@ Item {
 
         x: (mainWindow.width - width) / 2
         y: (mainWindow.height - height) / 2
+
+        onAboutToShow: {
+          comboBoxPlugins.currentIndex = comboBoxPlugins.indexOfValue(reloaderSettings.pluginUuid);
+        }
 
         ColumnLayout {
             spacing: 10
@@ -95,8 +103,8 @@ Item {
 
         onAccepted: {
             mainWindow.displayToast(qsTr("Plugin '%1' selected to be reloaded!").arg(comboBoxPlugins.currentText));
-            pluginName = comboBoxPlugins.currentText
-            pluginUuid = comboBoxPlugins.currentValue
+            reloaderSettings.pluginName = comboBoxPlugins.currentText
+            reloaderSettings.pluginUuid = comboBoxPlugins.currentValue
         }
     }
 }
