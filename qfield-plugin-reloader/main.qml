@@ -29,16 +29,16 @@ Item {
         onClicked: {
             if (reloaderSettings.pluginName != "" && reloaderSettings.pluginUuid != "") {
                 if (!reloaderSettings.skipConfirmation) {
-                  confirmationDialog.open()
+                  confirmationDialog.open();
                 } else {
-                  confirmationDialog.accepted()
+                  confirmationDialog.accepted();
                 }
             } else {
-                mainWindow.displayToast(qsTr("Press and hold to configure the plugin."))
+                mainWindow.displayToast(qsTr("Press and hold to configure the plugin."));
             }
         }
         onPressAndHold: {
-            pluginSelectionDialog.open()
+            pluginSelectionDialog.open();
         }
     }
 
@@ -64,10 +64,10 @@ Item {
 
         onAccepted: {
             if (pluginManager.isAppPluginEnabled(reloaderSettings.pluginUuid)) {
-                pluginManager.disableAppPlugin(reloaderSettings.pluginUuid)
+                pluginManager.disableAppPlugin(reloaderSettings.pluginUuid);
             }
-            pluginManager.enableAppPlugin(reloaderSettings.pluginUuid)
-            mainWindow.displayToast(qsTr("Reloading plugin '%1'...").arg(reloaderSettings.pluginName))
+            pluginManager.enableAppPlugin(reloaderSettings.pluginUuid);
+            mainWindow.displayToast(qsTr("Reloading plugin '%1'...").arg(reloaderSettings.pluginName));
         }
     }
 
@@ -94,6 +94,7 @@ Item {
                 id: labelSelection
                 wrapMode: Text.Wrap
                 text: qsTr("Select the (app) plugin you would like to reload")
+                font: Theme.defaultFont
             }
 
             ComboBox {
@@ -109,6 +110,7 @@ Item {
                 id: checkBoxSkipConfirmation
                 Layout.fillWidth: true
                 text: qsTr("Skip confirmation dialog when reloading")
+                font: Theme.defaultFont
                 
                 checked: reloaderSettings.skipConfirmation
                 
@@ -120,8 +122,8 @@ Item {
 
         onAccepted: {
             mainWindow.displayToast(qsTr("Plugin '%1' selected to be reloaded!").arg(comboBoxPlugins.currentText));
-            reloaderSettings.pluginName = comboBoxPlugins.currentText
-            reloaderSettings.pluginUuid = comboBoxPlugins.currentValue
+            reloaderSettings.pluginName = comboBoxPlugins.currentText;
+            reloaderSettings.pluginUuid = comboBoxPlugins.currentValue;
         }
     }
 }
