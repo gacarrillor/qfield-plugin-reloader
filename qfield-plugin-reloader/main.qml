@@ -83,7 +83,7 @@ Item {
                 text: qsTr("Select the (app) plugin you would like to reload")
             }
 
-            QfComboBox {
+            ComboBox {
                 id: comboBoxPlugins
                 Layout.fillWidth: true
 
