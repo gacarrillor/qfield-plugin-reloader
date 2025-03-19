@@ -16,6 +16,7 @@ Item {
         id: reloaderSettings
         property string pluginUuid: ""
         property string pluginName: ""
+        property bool skipConfirmation: false
     }
     
     QfToolButton {
@@ -27,7 +28,11 @@ Item {
 
         onClicked: {
             if (reloaderSettings.pluginName != "" && reloaderSettings.pluginUuid != "") {
-                confirmationDialog.open()
+                if (!reloaderSettings.skipConfirmation) {
+                  confirmationDialog.open()
+                } else {
+                  confirmationDialog.accepted()
+                }
             } else {
                 mainWindow.displayToast(qsTr("Press and hold to configure the plugin."))
             }
@@ -99,6 +104,18 @@ Item {
                 valueRole: "uuid"
                 model: pluginManager.availableAppPlugins
             }
+            
+            CheckBox {
+                id: checkBoxSkipConfirmation
+                Layout.fillWidth: true
+                text: qsTr("Skip confirmation dialog when reloading")
+                
+                checked: reloaderSettings.skipConfirmation
+                
+                onClicked: {
+                    reloaderSettings.skipConfirmation = !reloaderSettings.skipConfirmation;
+                }
+            }   
         }
 
         onAccepted: {
