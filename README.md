@@ -1,6 +1,5 @@
 [![Release](https://img.shields.io/github/v/release/gacarrillor/qfield-plugin-reloader.svg)](https://github.com/gacarrillor/qfield-plugin-reloader/releases)
-
-
+![Downloads](https://img.shields.io/github/downloads/gacarrillor/qfield-plugin-reloader/latest/qfield-plugin-reloader.zip?displayAssetName=false&label=Downloads%20v0.3&link=https%3A%2F%2Fgithub.com%2Fgacarrillor%2Fqfield-plugin-reloader%2Freleases%2Flatest%2Fdownload%2Fqfield-plugin-reloader.zip)
 
 # QField Plugin Reloader
 
