@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtCore
 
+import org.qfield
 import Theme
 
 Item {
