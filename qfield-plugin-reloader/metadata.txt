@@ -3,5 +3,5 @@ name=QField Plugin Reloader
 description=Reload a chosen QField (app) plugin in one click.
 author=Germán Carrillo (OPENGIS.ch)
 icon=icon.svg
-version=0.3
+version=0.4
 homepage=https://github.com/gacarrillor/qfield-plugin-reloader
